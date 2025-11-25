@@ -16,26 +16,24 @@ export default async function Home() {
 			{/* Header */}
 			<header className='bg-white shadow-sm'>
 				<div className='max-w-7xl mx-auto px-4 py-6'>
-					<h1 className='text-3xl font-bold text-gray-900'>
+					<h1 className='text-3xl font-bold text-gray-900 ml-4'>
 						Moorleez Art Studio
 					</h1>
-					<p className='text-gray-600 mt-1'>
+					<p className='text-gray-600 mt-1 ml-4'>
 						Original artwork and prints
 					</p>
 				</div>
 			</header>
 
 			{/* Products Grid */}
-			<div className='max-w-7xl mx-auto px-4 py-12'>
-				<h2 className='text-2xl font-bold mb-8'>Shop Collection</h2>
-
-				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+			<div className='max-w-7xl mx-auto p-24 py-16'>
+				<div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6'>
 					{products.map((product) => (
 						<div
 							key={product.id}
 							className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300'
 						>
-							<div className='relative h-64 w-full'>
+							<div className='relative h-48 w-full'>
 								<Image
 									src={product.image}
 									alt={product.name}
@@ -44,11 +42,11 @@ export default async function Home() {
 								/>
 							</div>
 
-							<div className='p-6'>
+							<div className='p-4'>
 								<div className='text-sm text-gray-500 mb-2'>
 									{product.category}
 								</div>
-								<h3 className='text-xl font-semibold mb-2'>
+								<h3 className='text-lg font-semibold mb-2 text-gray-900'>
 									{product.name}
 								</h3>
 								<p className='text-gray-600 mb-4 line-clamp-2'>
@@ -56,10 +54,10 @@ export default async function Home() {
 								</p>
 
 								<div className='flex items-center justify-between'>
-									<span className='text-2xl font-bold text-gray-900'>
+									<span className='text-lg font-bold text-gray-900'>
 										${product.price.toFixed(2)}
 									</span>
-									<button className='bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors'>
+									<button className='bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700 transition-colors'>
 										Add to Cart
 									</button>
 								</div>

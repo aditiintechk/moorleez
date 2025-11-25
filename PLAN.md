@@ -1,28 +1,168 @@
-# 🎯 2-Week Plan: Building Portfolio Projects for Spotify Engineering
+# 2-Week Plan: Building Portfolio Projects for Full Stack Role.
 
 **Goal:** Ship 3 production-grade projects + build in public daily
 
 **Timeline:** Week 1 (Nov 25 - Dec 1) + Week 2 (Dec 2 - Dec 8)
 
----
-
 ## Week 1: E-Commerce Platform (Nov 25 - Dec 1)
 
-### ✅ Day 1 (Mon, Nov 25) - COMPLETED
+### ✅ Day 1 (Nov 25) - COMPLETED
 
--   [x] Project setup (Next.js + TypeScript)
--   [x] Neon database connection
--   [x] Prisma schema + migration
--   [x] Seed 5 products
--   [x] Product listing page
--   [x] Deploy to Vercel
--   [x] First X/LinkedIn post
+1. **You've Completed** (1 hour)
 
-**What you built:** Live product catalog with database
+    - Created Next.js project
+    - Deployed to Vercel
+    - Connected Neon database
+
+2. **Get Database Connection String** (1 hour)
+
+    - Go to your Neon dashboard
+    - Click "Show secret"
+    - Copy the full connection string and add it in your .env.local
+
+3. **Get Database Connection String** (1 hour)
+
+    - Install Prisma
+        ```bash
+            npm install prisma @prisma/client
+            npx prisma init
+        ```
+    - Update `prisma/schema.prisma` with migration details & Product table schema
+    - Run migration
+        ```bash
+        npx prisma migrate dev --name init
+        npx prisma generate
+        ```
+
+4. **Get Database Connection String** (1 hour)
+
+    - Install tsx for typescript support to run migrations
+    - Create `prisma/seed.ts` to seed sample data
+    - Update `package.json`\*\* (add this):
+        ```json
+        {
+        	"prisma": {
+        		"seed": "tsx prisma/seed.ts"
+        	}
+        }
+        ```
+    - Run seed
+        ```bash
+           npx prisma db seed
+        ```
+
+5. **Build Product Listing Page** (2 hours)
+
+    - Update `app/page.tsx` with basic UI code to add product listings
+    - Test locally:
+        ```bash
+        npm run dev
+        ```
+
+6. **Deploy to Production** (15 mins)
+
+    - Check your live site
+        ```
+        https://moorleez.vercel.app
+        ```
+
+**Daily Post (X/LinkedIn):**
+
+    Day 1: Building Portfolio Projects
+
+    Just shipped the foundation of a production e-commerce platform for Moorleez Art Studio.
+
+    ✅ PostgreSQL database on Neon (serverless)
+    ✅ Product catalog with Next.js Server Components
+    ✅ Type-safe with Prisma ORM
+    ✅ Deployed to production
+
+    Why use Server Components?
+    > The page is loaded in the server and it renders full HTML with product data already inside it. That is, zero JavaScript shipped for product data = faster page loads.
+
+    55 days until my developer portfolio goes live!!
+
+    Live: https://moorleez.vercel.app
+
+#### **Your End-of-Day Checklist**
+
+By tonight (11 PM), you should have:
+
+-   ~~Neon database connected ✅ (you did this)~~
+-   ~~Prisma schema created~~
+-   ~~Database migrated~~
+-   ~~5 products seeded~~
+-   ~~Product listing page built~~
+-   ~~Working locally~~
+-   ~~Pushed to GitHub~~
+-   ~~Live on Vercel~~
+-   Posted on X/LinkedIn
+
+#### **What did I learn today?**
+
+```
+Client components are used when there is an immediate visual feedback coming from the browser to the user that must happen without a page reload. Otherwise, a server component is enough.
+
+1. Use Client Components when:
+
+The user expects something to change instantly on screen without a reload.
+
+Examples:
+
+* Clicking ❤️ and it fills immediately
+* Add to Cart updates cart count live
+* Quantity + / - buttons
+* Live form validation (“password too weak”)
+
+All these rely on:
+
+* Browser state
+* Event listeners
+* Instant UI updates
 
 ---
 
-### Day 2 (Tue, Nov 26) - Shopping Cart
+2. Use Server Components when:
+
+The interaction can:
+
+* Submit
+* Hit the server
+* Re-render a new page or refreshed state
+
+Examples:
+
+* Clicking “Buy Now” and going to checkout page
+* Submitting a review and seeing it after reload
+* Sorting that refreshes page (Oooo interesting!)
+* Logging in and being redirected
+
+These are still interactions, but:
+
+* Not instant visual feedback
+* Not browser-state dependent
+
+---
+
+Final takeaway
+
+For e-commerce especially:
+
+* Default to Server Components
+* Add Client Components only where UX demands instant feedback
+
+This gives you:
+
+* Maximum performance
+* Minimal JavaScript
+* Best SEO
+* Best scalability
+
+```
+
+---
+
+### ✅ Day 2 (Nov 26)
 
 **Goal:** Add functional shopping cart
 
@@ -76,14 +216,12 @@ Day 2: Implemented shopping cart with React Context 🛒
 
 Challenge: Mixing server & client components in Next.js App Router. Solution: Clear separation with 'use client' directive.
 
-Live: [your-url]
-
-#BuildInPublic #100DaysOfCode
+Live: https://moorleez.vercel.app
 ```
 
 ---
 
-### Day 3 (Wed, Nov 27) - Checkout Page Part 1
+### Day 3 (Nov 27) - Checkout Page Part 1
 
 **Goal:** Build checkout form
 
@@ -133,7 +271,7 @@ Starting to feel like a real store!
 
 ---
 
-### Day 4 (Thu, Nov 28) - Stripe Integration Setup
+### Day 4 (Nov 28) - Stripe Integration Setup
 
 **Goal:** Integrate payment processing
 
@@ -193,7 +331,7 @@ Security first. User experience second.
 
 ---
 
-### Day 5 (Fri, Nov 29) - Order Management
+### Day 5 (Nov 29) - Order Management
 
 **Goal:** Complete order flow
 
@@ -273,7 +411,7 @@ Learned: Webhooks are async. Always handle race conditions and idempotency.
 
 ---
 
-### Day 6 (Sat, Nov 30) - Email & Polish
+### Day 6 (Nov 30) - Email & Polish
 
 **Goal:** Email notifications + UI polish
 
@@ -355,7 +493,7 @@ Almost production-ready!
 
 ---
 
-### Day 7 (Sun, Dec 1) - Write Article + Admin Panel Prep
+### Day 7 (Dec 1) - Write Article + Admin Panel Prep
 
 **Goal:** Reflect, document, prepare for Week 2
 
@@ -458,9 +596,7 @@ Next week: Admin panel + Analytics
 
 ---
 
-## Week 2: Admin Panel + Analytics (Dec 2 - Dec 8)
-
-### Day 8 (Mon, Dec 2) - Authentication Setup
+### Day 8 (Dec 2) - Authentication Setup
 
 **Goal:** Add admin authentication
 
@@ -516,7 +652,7 @@ Admin panel taking shape!
 
 ---
 
-### Day 9 (Tue, Dec 3) - Product Management (CRUD)
+### Day 9 (Dec 3) - Product Management (CRUD)
 
 **Goal:** Admin can manage products
 
@@ -576,7 +712,7 @@ Using Prisma for type-safe database operations. Zero runtime errors.
 
 ---
 
-### Day 10 (Wed, Dec 4) - Order Management
+### Day 10 (Dec 4) - Order Management
 
 **Goal:** Admin can view and manage orders
 
@@ -632,7 +768,7 @@ My friend can now manage the entire business from the admin panel!
 
 ---
 
-### Day 11 (Thu, Dec 5) - Analytics Dashboard Part 1
+### Day 11 (Dec 5) - Analytics Dashboard Part 1
 
 **Goal:** Show sales insights
 
@@ -648,7 +784,7 @@ My friend can now manage the entire business from the admin panel!
 
 2. **Revenue Chart** (1.5 hours)
 
-    - Line chart showing daily/weekly/monthly revenue
+    - Line chart showing daily/weekly/thly revenue
     - Use Recharts library
     - Last 30 days by default
     - Toggle between time periods
@@ -686,7 +822,7 @@ Leveraging SAP analytics experience for modern web!
 
 ---
 
-### Day 12 (Fri, Dec 6) - Analytics Dashboard Part 2 + Polish
+### Day 12 (Dec 6) - Analytics Dashboard Part 2 + Polish
 
 **Goal:** Advanced analytics + final touches
 
@@ -743,7 +879,7 @@ This admin panel is more powerful than some actual e-commerce platforms!
 
 ---
 
-### Day 13 (Sat, Dec 7) - Testing + Handoff Prep
+### Day 13 (Dec 7) - Testing + Handoff Prep
 
 **Goal:** Production-ready, hand to friend
 
@@ -799,7 +935,7 @@ This admin panel is more powerful than some actual e-commerce platforms!
     - One last check
     - Push to production
     - Verify everything works
-    - Monitor for errors
+    - itor for errors
 
 **Daily Post:**
 
@@ -822,7 +958,7 @@ Demo video: [link]
 
 ---
 
-### Day 14 (Sun, Dec 8) - Week 2 Article + Project 2 Planning
+### Day 14 (Dec 8) - Week 2 Article + Project 2 Planning
 
 **Goal:** Document learnings, plan AI dashboard
 
