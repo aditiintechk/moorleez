@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import Image from 'next/image'
+import ProductCard from '@/components/products/ProductCard'
 
 const connectionString = process.env.DATABASE_URL!
 const adapter = new PrismaNeon({ connectionString })
@@ -13,70 +13,38 @@ export default async function Home() {
 
 	return (
 		<main className='min-h-screen bg-gray-50'>
-			{/* Header */}
-			<header className='bg-white shadow-sm'>
-				<div className='max-w-7xl mx-auto px-4 py-6'>
-					<h1 className='text-3xl font-bold text-gray-900 ml-4'>
-						Moorleez Art Studio
-					</h1>
-					<p className='text-gray-600 mt-1 ml-4'>
-						Original artwork and prints
-					</p>
-				</div>
-			</header>
+			<div className='max-w-7xl mx-auto px-4 py-12'>
+				<h2 className='text-2xl font-bold mb-8'>Shop Collection</h2>
 
-			{/* Products Grid */}
-			<div className='max-w-7xl mx-auto p-24 py-16'>
-				<div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-					{products.map((product) => (
-						<div
-							key={product.id}
-							className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300'
+				{products.length === 0 ? (
+					<div className='text-center py-16'>
+						<svg
+							className='mx-auto h-24 w-24 text-gray-400'
+							fill='none'
+							viewBox='0 0 24 24'
+							stroke='currentColor'
 						>
-							<div className='relative h-48 w-full'>
-								<Image
-									src={product.image}
-									alt={product.name}
-									fill
-									className='object-cover'
-								/>
-							</div>
-
-							<div className='p-4'>
-								<div className='text-sm text-gray-500 mb-2'>
-									{product.category}
-								</div>
-								<h3 className='text-lg font-semibold mb-2 text-gray-900'>
-									{product.name}
-								</h3>
-								<p className='text-gray-600 mb-4 line-clamp-2'>
-									{product.description}
-								</p>
-
-								<div className='flex items-center justify-between'>
-									<span className='text-lg font-bold text-gray-900'>
-										${product.price.toFixed(2)}
-									</span>
-									<button className='bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700 transition-colors'>
-										Add to Cart
-									</button>
-								</div>
-
-								<div className='mt-3 text-sm text-gray-500'>
-									{product.stock > 0 ? (
-										<span className='text-green-600'>
-											In Stock ({product.stock})
-										</span>
-									) : (
-										<span className='text-red-600'>
-											Out of Stock
-										</span>
-									)}
-								</div>
-							</div>
-						</div>
-					))}
-				</div>
+							<path
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								strokeWidth={1}
+								d='M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4'
+							/>
+						</svg>
+						<h3 className='mt-6 text-xl font-semibold text-gray-900'>
+							No products yet
+						</h3>
+						<p className='mt-2 text-gray-600'>
+							Check back soon for new artwork!
+						</p>
+					</div>
+				) : (
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+						{products.map((product) => (
+							<ProductCard key={product.id} product={product} />
+						))}
+					</div>
+				)}
 			</div>
 		</main>
 	)

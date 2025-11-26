@@ -66,7 +66,7 @@
         https://moorleez.vercel.app
         ```
 
-**Daily Post (X/LinkedIn):**
+**Daily Post (X):**
 
     Day 1: Building Portfolio Projects
 
@@ -84,19 +84,27 @@
 
     Live: https://moorleez.vercel.app
 
-#### **Your End-of-Day Checklist**
+**Daily Post (LinkedIn):**
 
-By tonight (11 PM), you should have:
+    Day 1: Building E-commerce Platform for Moorleez Art Studio.
 
--   ~~Neon database connected ✅ (you did this)~~
--   ~~Prisma schema created~~
--   ~~Database migrated~~
--   ~~5 products seeded~~
--   ~~Product listing page built~~
--   ~~Working locally~~
--   ~~Pushed to GitHub~~
--   ~~Live on Vercel~~
--   Posted on X/LinkedIn
+    - Create Next.js Project
+    - Connect to PostgreSQL database on Neon (serverless)
+    - Build Product catalog with Next.js Server Components
+    - Implement Type-safe Prisma ORM
+    - Deploy the first version to production
+
+    What did I learn today?
+
+    Why use Server Components?
+    > The page is loaded in the server and it renders full HTML with product data already inside it. That is, zero JavaScript shipped for product data = faster page loads.
+
+    Client Components vs Server Components
+    > Client components are used when there is an immediate visual feedback coming from the browser to the user that must happen without a page reload. Otherwise, a server component is the way to go.
+
+    20 days until the site goes live!!
+
+    Live site: https://moorleez.vercel.app
 
 #### **What did I learn today?**
 
@@ -159,6 +167,21 @@ This gives you:
 * Best scalability
 
 ```
+
+#### **Your End-of-Day Checklist**
+
+By tonight (10 PM), you should have:
+
+-   ~~Neon database connected ✅ (you did this)~~
+-   ~~Prisma schema created~~
+-   ~~Database migrated~~
+-   ~~5 products seeded~~
+-   ~~Product listing page built~~
+-   ~~Working locally~~
+-   ~~Pushed to GitHub~~
+-   ~~Live on Vercel~~
+-   ~~Posted on X/LinkedIn~~
+-   ~~Learnings~~
 
 ---
 
