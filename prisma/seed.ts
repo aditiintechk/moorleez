@@ -22,7 +22,7 @@ async function main() {
 			},
 			{
 				name: 'Watercolor Landscape',
-				description: 'Hand-painted watercolor landscape, 18x24 inches',
+				description: 'Painted watercolor landscape, 18x24 inches',
 				price: 129.99,
 				image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500',
 				stock: 8,
