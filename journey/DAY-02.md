@@ -520,7 +520,7 @@ export default function CartPage() {
 							>
 								<div className='flex gap-6'>
 									{/* Product Image */}
-									<div className='relative w-32 h-32 flex-shrink-0'>
+									<div className='relative w-32 h-32 shrink-0'>
 										<Image
 											src={item.image}
 											alt={item.name}
@@ -530,7 +530,7 @@ export default function CartPage() {
 									</div>
 
 									{/* Product Info */}
-									<div className='flex-grow'>
+									<div className='grow'>
 										<h3 className='text-xl font-semibold mb-2'>
 											{item.name}
 										</h3>

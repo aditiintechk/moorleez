@@ -185,7 +185,7 @@ By tonight (10 PM), you should have:
 
 ---
 
-### ✅ Day 2 (Nov 26)
+### ✅ Day 2 (Nov 26) - COMPLETED
 
 **Goal:** Add functional shopping cart
 

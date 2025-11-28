@@ -15,7 +15,7 @@ async function main() {
 			{
 				name: 'Abstract Canvas Print',
 				description: 'Beautiful abstract art piece, 24x36 inches',
-				price: 89.99,
+				price: 899.99,
 				image: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=500',
 				stock: 15,
 				category: 'Canvas Prints',
@@ -23,7 +23,7 @@ async function main() {
 			{
 				name: 'Watercolor Landscape',
 				description: 'Painted watercolor landscape, 18x24 inches',
-				price: 129.99,
+				price: 1299.99,
 				image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500',
 				stock: 8,
 				category: 'Original Paintings',
@@ -31,7 +31,7 @@ async function main() {
 			{
 				name: 'Modern Art Poster',
 				description: 'Minimalist poster design, 16x20 inches',
-				price: 39.99,
+				price: 399.99,
 				image: 'https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=500',
 				stock: 50,
 				category: 'Posters',
@@ -39,7 +39,7 @@ async function main() {
 			{
 				name: 'Acrylic Portrait',
 				description: 'Custom acrylic portrait, 20x30 inches',
-				price: 199.99,
+				price: 1999.99,
 				image: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=500',
 				stock: 5,
 				category: 'Original Paintings',
@@ -47,7 +47,7 @@ async function main() {
 			{
 				name: 'Art Print Set',
 				description: 'Set of 3 coordinating prints, 12x16 inches each',
-				price: 79.99,
+				price: 799.99,
 				image: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=500',
 				stock: 25,
 				category: 'Print Sets',

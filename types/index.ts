@@ -21,3 +21,19 @@ export type CartContextType = {
 	totalItems: number
 	totalPrice: number
 }
+
+export type ValidationResult = {
+	isValid: boolean
+	error?: string
+}
+
+export type CheckoutFormData = {
+	email: string
+	name: string
+	phone: string
+	pincode: string
+	address: string
+	apartment?: string
+	city: string
+	state: string
+}

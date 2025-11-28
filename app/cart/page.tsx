@@ -44,7 +44,7 @@ export default function CartPage() {
 							>
 								<div className='flex gap-6'>
 									{/* Product Image */}
-									<div className='relative w-32 h-32 flex-shrink-0'>
+									<div className='relative w-32 h-32 shrink-0'>
 										<Image
 											src={item.image}
 											alt={item.name}
@@ -54,13 +54,13 @@ export default function CartPage() {
 									</div>
 
 									{/* Product Info */}
-									<div className='flex-grow'>
-										<h3 className='text-xl font-semibold mb-2'>
-											{item.name}
-										</h3>
-										<p className='text-gray-600 mb-4'>
-											${item.price.toFixed(2)} each
-										</p>
+									<div className='grow'>
+									<h3 className='text-xl font-semibold mb-2'>
+										{item.name}
+									</h3>
+									<p className='text-gray-600 mb-4'>
+										₹{item.price.toFixed(2)} each
+									</p>
 
 										{/* Quantity Controls */}
 										<div className='flex items-center gap-4'>
@@ -103,15 +103,15 @@ export default function CartPage() {
 										</div>
 									</div>
 
-									{/* Item Total */}
-									<div className='text-right'>
-										<p className='text-2xl font-bold text-gray-900'>
-											$
-											{(
-												item.price * item.quantity
-											).toFixed(2)}
-										</p>
-									</div>
+								{/* Item Total */}
+								<div className='text-right'>
+									<p className='text-2xl font-bold text-gray-900'>
+										₹
+										{(
+											item.price * item.quantity
+										).toFixed(2)}
+									</p>
+								</div>
 								</div>
 							</div>
 						))}
@@ -124,20 +124,20 @@ export default function CartPage() {
 								Order Summary
 							</h2>
 
-							<div className='space-y-4 mb-6'>
-								<div className='flex justify-between text-gray-600'>
-									<span>Items ({totalItems})</span>
-									<span>${totalPrice.toFixed(2)}</span>
-								</div>
-								<div className='flex justify-between text-gray-600'>
-									<span>Shipping</span>
-									<span>Calculated at checkout</span>
-								</div>
-								<div className='border-t pt-4 flex justify-between text-xl font-bold'>
-									<span>Total</span>
-									<span>${totalPrice.toFixed(2)}</span>
-								</div>
+						<div className='space-y-4 mb-6'>
+							<div className='flex justify-between text-gray-600'>
+								<span>Items ({totalItems})</span>
+								<span>₹{totalPrice.toFixed(2)}</span>
 							</div>
+							<div className='flex justify-between text-gray-600'>
+								<span>Shipping</span>
+								<span>Calculated at checkout</span>
+							</div>
+							<div className='border-t pt-4 flex justify-between text-xl font-bold'>
+								<span>Total</span>
+								<span>₹{totalPrice.toFixed(2)}</span>
+							</div>
+						</div>
 
 							<Link
 								href='/checkout'
