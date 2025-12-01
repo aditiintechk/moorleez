@@ -22,11 +22,52 @@ export default function Checkout() {
 		mode: 'onTouched',
 		reValidateMode: 'onChange',
 	})
-	const { items, totalPrice } = useCart()
+	const { items, totalPrice, clearCart } = useCart() //items --> id, name, price, image, quantity
 
 	const onSubmit = async (data: CheckoutFormData) => {
-		console.log('Form submitted:', data)
-		router.push('/payment')
+		try {
+			// Calculate total items
+			const totalItems = items.reduce(
+				(sum, item) => sum + item.quantity,
+				0
+			)
+
+			const orderData = {
+				customerName: data.name,
+				customerEmail: data.email,
+				customerPhone: data.phone,
+				shippingAddress: data.address,
+				apartment: data.apartment || '',
+				city: data.city,
+				state: data.state,
+				pincode: data.pincode,
+				items: items,
+				totalPrice: totalPrice,
+				totalItems: totalItems,
+			}
+
+			const response = await fetch('/api/orders', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(orderData),
+			})
+
+			const result = await response.json()
+
+			if (response.ok) {
+				clearCart()
+				router.push(`/order/${result.orderId}`)
+			} else {
+				alert(
+					result.error || 'Failed to create order. Please try again.'
+				)
+			}
+		} catch (error) {
+			console.error('Order submission error:', error)
+			alert('Something went wrong. Please try again.')
+		}
 	}
 
 	return (
@@ -233,23 +274,31 @@ export default function Checkout() {
 
 							{/* Phone */}
 							<div className='mt-4'>
-								<input
-									{...register('phone', {
-										validate: (value) => {
-											const result = validatePhone(value)
-											return (
-												result.isValid || result.error
-											)
-										},
-									})}
-									type='tel'
-									className={`w-full px-3 py-2.5 border rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 ${
-										errors.phone
-											? 'border-red-600 focus:ring-red-600'
-											: 'border-gray-300 focus:ring-gray-900'
-									}`}
-									placeholder='Phone'
-								/>
+								<div className='flex'>
+									<span className='inline-flex items-center px-3 py-2.5 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-700 text-sm font-medium'>
+										+91
+									</span>
+									<input
+										{...register('phone', {
+											validate: (value) => {
+												const result =
+													validatePhone(value)
+												return (
+													result.isValid ||
+													result.error
+												)
+											},
+										})}
+										type='tel'
+										maxLength={10}
+										className={`flex-1 px-3 py-2.5 border rounded-r-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 ${
+											errors.phone
+												? 'border-red-600 focus:ring-red-600'
+												: 'border-gray-300 focus:ring-gray-900'
+										}`}
+										placeholder='10-digit phone number'
+									/>
+								</div>
 								{errors.phone?.message && (
 									<p className='mt-2 text-sm text-red-600'>
 										{String(errors.phone.message)}
@@ -264,9 +313,7 @@ export default function Checkout() {
 							disabled={isSubmitting}
 							className='w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium'
 						>
-							{isSubmitting
-								? 'Processing...'
-								: 'Continue to payment'}
+							{isSubmitting ? 'Processing...' : 'Place Order'}
 						</button>
 					</form>
 				</div>

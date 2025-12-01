@@ -1,23 +1,40 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useCart } from '@/app/context/CartContext'
+import { useEffect, useState } from 'react'
 
 export default function Header() {
 	const { totalItems } = useCart()
+	const [isMounted, setIsMounted] = useState(false)
+
+	useEffect(() => {
+		// eslint-disable-next-line react-hooks/set-state-in-effect
+		setIsMounted(true)
+	}, [])
 
 	return (
 		<header className='bg-white shadow-sm sticky top-0 z-50'>
 			<div className='max-w-7xl mx-auto px-10 py-4'>
 				<div className='flex items-center justify-between'>
 					{/* Logo/Brand */}
-					<Link href='/' className='flex flex-col'>
-						<h1 className='text-2xl font-bold text-gray-900'>
-							Moorleez Art Studio
-						</h1>
-						<p className='text-sm text-gray-600'>
-							Original artwork and prints
-						</p>
+					<Link href='/' className='flex items-center gap-3'>
+						<Image
+							src='/apple-touch-icon.png'
+							alt='Moorleez Art Studio Logo'
+							width={60}
+							height={60}
+							className='object-contain'
+						/>
+						<div className='flex flex-col'>
+							<h1 className='text-2xl font-bold text-gray-900'>
+								Moorleez Art Studio
+							</h1>
+							<p className='text-sm text-gray-600'>
+								Fine Art & Handmade Goods
+							</p>
+						</div>
 					</Link>
 
 					{/* Cart Icon */}
@@ -43,10 +60,14 @@ export default function Header() {
 
 						<span className='font-semibold'>Cart</span>
 
-						{/* Item count badge */}
-						{totalItems > 0 && (
+						{/* Item count badge - only show after mount */}
+						{isMounted && totalItems > 0 && (
 							<span className='absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center'>
-								{totalItems}
+								{isMounted
+									? totalItems > 0
+										? totalItems
+										: ''
+									: ''}
 							</span>
 						)}
 					</Link>

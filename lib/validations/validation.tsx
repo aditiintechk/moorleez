@@ -106,12 +106,13 @@ export function validatePhone(phone: string): ValidationResult {
 
 	const trimmedPhone = phone.replace(/[\s-]/g, '')
 
-	const phonePattern = /^(\+91|91)?[6-9]\d{9}$/
+	// Now just check for 10 digits starting with 6-9
+	const phonePattern = /^[6-9]\d{9}$/
 
 	if (!phonePattern.test(trimmedPhone)) {
 		return {
 			isValid: false,
-			error: 'Please enter a valid Phone Number',
+			error: 'Please enter a valid 10-digit phone number',
 		}
 	}
 	return {

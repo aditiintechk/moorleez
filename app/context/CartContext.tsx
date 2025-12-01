@@ -1,12 +1,53 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState } from 'react'
+import {
+	createContext,
+	ReactNode,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
 import { CartItem, CartContextType, Product } from '@/types'
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
+// define cart key
+const CART_STORAGE_KEY = 'moorleez-cart'
+
+// two helper functions
+const loadCartFromStorage = (): CartItem[] => {
+	if (typeof window === 'undefined') return []
+	try {
+		const saved = localStorage.getItem(CART_STORAGE_KEY)
+		return saved ? JSON.parse(saved) : []
+	} catch (error) {
+		console.error('Failed to load cart from localstorage', error)
+		return []
+	}
+}
+
+const saveCartToStorage = (items: CartItem[]) => {
+	if (typeof window === 'undefined') return []
+	try {
+		localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
+	} catch (error) {
+		console.error('failed to save cart to storage', error)
+	}
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
-	const [items, setItems] = useState<CartItem[]>([])
+	const [items, setItems] = useState<CartItem[]>(loadCartFromStorage)
+
+	const isInitialMount = useRef(true)
+
+	useEffect(() => {
+		if (isInitialMount.current) {
+			isInitialMount.current = false
+			return
+		}
+
+		saveCartToStorage(items)
+	}, [items])
 
 	const addToCart = (product: Product) => {
 		/* algo: check if item already exists
