@@ -6,7 +6,7 @@ Each day: Algorithm practice + Problem-solving + Code review + Ship
 
 ---
 
-## Day 1: Product Listing Foundation
+## Day 1: Product Listing Foundation ✅
 
 ### Morning Algorithm (45 mins)
 
@@ -89,7 +89,7 @@ Build a product catalog system that:
 
 ---
 
-## Day 2: Shopping Cart Logic
+## Day 2: Shopping Cart Logic ✅
 
 ### Morning Algorithm (45 mins)
 
@@ -220,7 +220,7 @@ Think through:
 
 ---
 
-## Day 3: Form Validation & Checkout UI
+## Day 3: Form Validation & Checkout UI ✅
 
 ### Morning Algorithm (45 mins)
 
@@ -354,7 +354,7 @@ Think about:
 
 ---
 
-## Day 4: Order Management System
+## Day 4: Order Management System ✅
 
 ### Morning Algorithm (45 mins)
 
@@ -510,9 +510,11 @@ Think about:
 
 -   I'd use database transactions following ACID principles, similar to how UPI ensures atomic money transfers. If any step fails during order creation - like stock validation or payment - the entire operation rolls back, maintaining data consistency.
 
----
+2. Why use for..of instead of Array.map() on async transactions?
 
-## Day 5: Inventory & Error Handling
+-   ***
+
+## Day 5: Inventory & Error Handling ✅
 
 ### Morning Algorithm (45 mins)
 

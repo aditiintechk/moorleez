@@ -7,7 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma generate",
+		"test": "vitest",
+		"test:ui": "vitest --ui"
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^1.0.2",
@@ -25,11 +27,15 @@
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"@vitejs/plugin-react": "^5.1.1",
+		"@vitest/ui": "^4.0.15",
 		"eslint": "^9",
 		"eslint-config-next": "16.0.3",
+		"jsdom": "^27.2.0",
 		"tailwindcss": "^4",
 		"tsx": "^4.20.6",
-		"typescript": "^5"
+		"typescript": "^5",
+		"vitest": "^4.0.15"
 	},
 	"prisma": {
 		"seed": "tsx prisma/seed.ts"
