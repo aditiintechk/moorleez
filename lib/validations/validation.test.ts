@@ -80,3 +80,44 @@ describe('validateEmail', () => {
 		expect(result.isValid).toBe(true)
 	})
 })
+
+describe('validateName', () => {
+	test('accepts name of more than two characters', () => {
+		const result = validateName('Sarah')
+		expect(result.isValid).toBe(true)
+	})
+
+	test('rejects name of less than two characters', () => {
+		const result = validateName('s')
+		expect(result.isValid).toBe(false)
+	})
+
+	test('rejects empty string as name', () => {
+		const result = validateName('')
+		expect(result.isValid).toBe(false)
+	})
+
+	test('rejects numbers or special characters in name', () => {
+		const result = validateName('ar4#ds00')
+		expect(result.isValid).toBe(false)
+	})
+})
+
+describe('validatePincode', () => {
+	test('accepts pincode of exactly six numbers', () => {
+		const result = validatePincode('560001')
+		expect(result.isValid).toBe(true)
+	})
+
+	test('rejects empty string as pincode', () => {
+		const result = validatePincode('')
+		expect(result.isValid).toBe(false)
+	})
+
+	test('rejects pincode of incorrect length', () => {
+		const resultOne = validatePincode('123')
+		expect(resultOne.isValid).toBe(false)
+		const resultTwo = validatePincode('12345678')
+		expect(resultTwo.isValid).toBe(false)
+	})
+})
