@@ -20,6 +20,9 @@ jobs:
               with:
                   node-version: '24'
 
+            - name: Set dummy DATABASE_URL for Prisma
+              run: echo "DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy" >> $GITHUB_ENV
+
             - name: Install dependencies
               run: npm ci
 
