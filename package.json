@@ -9,7 +9,12 @@
 		"lint": "eslint",
 		"postinstall": "prisma generate",
 		"test": "vitest",
-		"test:ui": "vitest --ui"
+		"test:ui": "vitest --ui",
+		"test:e2e": "playwright test",
+		"test:e2e:local": "dotenv -e .env.test -- playwright test",
+		"test:e2e:ui": "dotenv -e .env.test -- playwright test --ui",
+		"test:e2e:headed": "dotenv -e .env.test -- playwright test --headed",
+		"seed:test": "dotenv-cli -e .env.test -- npx prisma db seed"
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^1.0.2",
@@ -23,6 +28,7 @@
 		"react-hook-form": "^7.66.1"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.57.0",
 		"@tailwindcss/postcss": "^4",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^16.3.0",
@@ -31,6 +37,7 @@
 		"@types/react-dom": "^19",
 		"@vitejs/plugin-react": "^5.1.1",
 		"@vitest/ui": "^4.0.15",
+		"dotenv-cli": "^11.0.0",
 		"eslint": "^9",
 		"eslint-config-next": "16.0.3",
 		"jsdom": "^27.2.0",

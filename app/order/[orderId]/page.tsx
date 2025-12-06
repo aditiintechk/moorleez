@@ -43,9 +43,9 @@ export default async function OrderConfirmation({
 								/>
 							</svg>
 						</div>
-						<h1 className='text-3xl font-bold text-gray-900 mb-2'>
+						<h2 className='text-3xl font-bold text-gray-900 mb-2'>
 							Order Placed Successfully!
-						</h1>
+						</h2>
 						<p className='text-gray-600 mb-4'>
 							Thank you for your order. We will send you a
 							confirmation email shortly.
@@ -63,15 +63,15 @@ export default async function OrderConfirmation({
 
 				{/* Order Details */}
 				<div className='bg-white rounded-lg shadow-md p-8 mb-6'>
-					<h2 className='text-xl font-semibold mb-4'>
+					<h3 className='text-xl font-semibold mb-4'>
 						Order Details
-					</h2>
+					</h3>
 
 					{/* Customer Info */}
 					<div className='mb-6 pb-6 border-b'>
-						<h3 className='font-semibold text-gray-700 mb-3'>
+						<h4 className='font-semibold text-gray-700 mb-3'>
 							Shipping Information
-						</h3>
+						</h4>
 						<p className='text-gray-900'>{order.customerName}</p>
 						<p className='text-gray-600'>{order.customerEmail}</p>
 						<p className='text-gray-600'>{order.customerPhone}</p>
