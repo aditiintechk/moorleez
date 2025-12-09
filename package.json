@@ -17,6 +17,7 @@
 		"seed:test": "dotenv-cli -e .env.test -- npx prisma db seed"
 	},
 	"dependencies": {
+		"@clerk/nextjs": "^6.36.0",
 		"@neondatabase/serverless": "^1.0.2",
 		"@prisma/adapter-neon": "^7.0.0",
 		"@prisma/client": "^7.0.0",

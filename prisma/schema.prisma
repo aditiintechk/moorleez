@@ -15,6 +15,7 @@ model Product {
   stock Int
   category String
   createdAt DateTime @default(now())
+  isDeleted Boolean @default(false)
 }
 
 model Order {
