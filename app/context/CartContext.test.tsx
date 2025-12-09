@@ -21,6 +21,7 @@ describe('CartContext', () => {
 			stock: 10,
 			category: 'Test Category',
 			createdAt: new Date(),
+			isDeleted: false,
 			...overrides,
 		})
 
@@ -49,6 +50,7 @@ describe('CartContext', () => {
 			stock: 10,
 			category: 'Test Category',
 			createdAt: new Date(),
+			isDeleted: false,
 			...overrides,
 		})
 
@@ -81,6 +83,7 @@ describe('CartContext', () => {
 			stock: 10,
 			category: 'Test Category',
 			createdAt: new Date(),
+			isDeleted: false,
 			...overrides,
 		})
 
