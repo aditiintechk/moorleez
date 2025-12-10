@@ -14,7 +14,12 @@
 		"test:e2e:local": "dotenv -e .env.test -- playwright test",
 		"test:e2e:ui": "dotenv -e .env.test -- playwright test --ui",
 		"test:e2e:headed": "dotenv -e .env.test -- playwright test --headed",
-		"seed:test": "dotenv-cli -e .env.test -- npx prisma db seed"
+		"seed:test": "dotenv-cli -e .env.test -- npx prisma db seed",
+		"validate": "npm run type-check && npm run lint && npm run test:unit && npm run build",
+		"type-check": "tsc --noEmit",
+		"test:unit": "vitest run",
+		"pre-push": "npm run validate",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^6.36.0",
@@ -41,6 +46,7 @@
 		"dotenv-cli": "^11.0.0",
 		"eslint": "^9",
 		"eslint-config-next": "16.0.3",
+		"husky": "^9.1.7",
 		"jsdom": "^27.2.0",
 		"tailwindcss": "^4",
 		"tsx": "^4.20.6",

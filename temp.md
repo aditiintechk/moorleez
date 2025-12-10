@@ -1,0 +1,11 @@
+-  Hour 1: Create Product Action + Modal
+-  Hour 2: Edit Product Feature
+-  Hour 3: Delete Product Feature
+-  Hour 4: Validation + Polish
+-  Hour 5: Orders List Page
+-  Hour 6: Order Status Updates
+-  Hour 7: Dashboard Widgets
+-  Hour 8: Revenue Chart
+-  Hour 9: Product CRUD Tests
+-  Hour 10: E2E Tests (optional)
+
