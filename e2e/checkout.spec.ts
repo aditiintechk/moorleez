@@ -31,7 +31,7 @@ test('user can complete full checkout flow', async ({ page }) => {
 	await page.click('button[type="submit"]')
 
 	await expect(page).toHaveURL(/\/order\/\w+/)
-	await expect(page.locator('h2')).toContainText(
-		/Order Placed Successfully!/i
-	)
+	await expect(
+		page.getByRole('heading', { name: /Order Placed Successfully!/i })
+	).toBeVisible()
 })

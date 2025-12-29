@@ -20,12 +20,14 @@ export default function Header() {
 	const isAdminPage = pathname?.startsWith('/admin')
 
 	useEffect(() => {
+		// Set mounted after initial render to avoid hydration mismatch
+		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setIsMounted(true)
-		
+
 		const handleScroll = () => {
 			setIsScrolled(window.scrollY > 20)
 		}
-		
+
 		window.addEventListener('scroll', handleScroll)
 		return () => window.removeEventListener('scroll', handleScroll)
 	}, [])
