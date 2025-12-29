@@ -15,19 +15,24 @@ export default function SortDropdown() {
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const router = useRouter()
 	const searchParams = useSearchParams()
-	
+
 	const currentSort = searchParams.get('sort') || 'newest'
-	const currentOption = sortOptions.find(opt => opt.value === currentSort) || sortOptions[0]
+	const currentOption =
+		sortOptions.find((opt) => opt.value === currentSort) || sortOptions[0]
 
 	// Close dropdown when clicking outside
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
 				setIsOpen(false)
 			}
 		}
 		document.addEventListener('mousedown', handleClickOutside)
-		return () => document.removeEventListener('mousedown', handleClickOutside)
+		return () =>
+			document.removeEventListener('mousedown', handleClickOutside)
 	}, [])
 
 	const handleSelect = (value: string) => {
@@ -46,16 +51,23 @@ export default function SortDropdown() {
 			{/* Trigger Button */}
 			<button
 				onClick={() => setIsOpen(!isOpen)}
-				className='flex items-center justify-between gap-2 bg-beige border border-light-gray rounded-md px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-deep-brown font-medium hover:border-clay transition-colors cursor-pointer min-w-[140px] sm:min-w-[160px]'
+				className='flex items-center justify-between gap-2 bg-beige border border-light-gray rounded-md px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-deep-brown font-medium hover:border-clay transition-colors cursor-pointer min-w-[140px] sm:min-w-40'
 			>
 				<span>{currentOption.label}</span>
-				<svg 
-					className={`w-4 h-4 text-warm-gray transition-transform ${isOpen ? 'rotate-180' : ''}`}
-					fill='none' 
-					stroke='currentColor' 
+				<svg
+					className={`w-4 h-4 text-warm-gray transition-transform ${
+						isOpen ? 'rotate-180' : ''
+					}`}
+					fill='none'
+					stroke='currentColor'
 					viewBox='0 0 24 24'
 				>
-					<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
+					<path
+						strokeLinecap='round'
+						strokeLinejoin='round'
+						strokeWidth={2}
+						d='M19 9l-7 7-7-7'
+					/>
 				</svg>
 			</button>
 
@@ -80,4 +92,3 @@ export default function SortDropdown() {
 		</div>
 	)
 }
-

@@ -29,11 +29,8 @@ const ProductCard = ({ product }: { product: Product }) => {
 	}
 
 	// Stock status
-	const stockStatus = product.stock === 0 
-		? 'out' 
-		: product.stock <= 3 
-			? 'low' 
-			: 'in'
+	const stockStatus =
+		product.stock === 0 ? 'out' : product.stock <= 3 ? 'low' : 'in'
 
 	return (
 		<div
@@ -51,34 +48,39 @@ const ProductCard = ({ product }: { product: Product }) => {
 						isHovered ? 'scale-105' : 'scale-100'
 					}`}
 				/>
-				
+
 				{/* Badges Container */}
 				<div className='absolute top-2 left-2 z-10'>
 					<span className='bg-deep-brown/80 text-cream text-[9px] font-medium px-1.5 py-0.5 rounded capitalize'>
-						{product.category.length > 8 
-							? product.category.slice(0, 8) + '..' 
-							: product.category
-						}
+						{product.category.length > 8
+							? product.category.slice(0, 8) + '..'
+							: product.category}
 					</span>
 				</div>
-				
+
 				{/* Stock Badge */}
 				{stockStatus !== 'in' && (
 					<div className='absolute top-2 right-2 z-10'>
-						<span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${
-							stockStatus === 'out' 
-								? 'bg-red-600 text-white' 
-								: 'bg-terracotta text-white'
-						}`}>
-							{stockStatus === 'out' ? 'Sold Out' : `${product.stock} left`}
+						<span
+							className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${
+								stockStatus === 'out'
+									? 'bg-red-600 text-white'
+									: 'bg-terracotta text-white'
+							}`}
+						>
+							{stockStatus === 'out'
+								? 'Sold Out'
+								: `${product.stock} left`}
 						</span>
 					</div>
 				)}
 
 				{/* Quick Add Overlay */}
-				<div className={`absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/60 via-black/30 to-transparent transition-all duration-300 ${
-					isHovered ? 'opacity-100' : 'opacity-0'
-				}`}>
+				<div
+					className={`absolute inset-x-0 bottom-0 p-2 bg-linear-to-t from-black/60 via-black/30 to-transparent transition-all duration-300 ${
+						isHovered ? 'opacity-100' : 'opacity-0'
+					}`}
+				>
 					{!isInCart && product.stock > 0 && (
 						<button
 							onClick={(e) => {
@@ -101,7 +103,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 							>
 								−
 							</button>
-							<span className='px-2 py-1.5 font-semibold text-deep-brown text-xs min-w-[28px] text-center'>
+							<span className='px-2 py-1.5 font-semibold text-deep-brown text-xs min-w-7 text-center'>
 								{quantityInCart}
 							</span>
 							<button
@@ -129,7 +131,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 				<h3 className='font-medium text-deep-brown text-xs mb-0.5 line-clamp-1 group-hover:text-terracotta transition-colors'>
 					{product.name}
 				</h3>
-				
+
 				{/* Description */}
 				<p className='text-warm-gray text-[10px] mb-2 line-clamp-1'>
 					{product.description}
