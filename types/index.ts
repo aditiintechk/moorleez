@@ -37,3 +37,15 @@ export type CheckoutFormData = {
 	city: string
 	state: string
 }
+
+export type DailyRevenue = {
+	date: string
+	revenue: number
+	orderCount: number
+}
+
+export type TopProduct = {
+	productName: string
+	unitsSold: number
+	revenue: number
+}

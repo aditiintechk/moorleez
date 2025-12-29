@@ -3,9 +3,11 @@
 import { Product } from '@/types'
 import Image from 'next/image'
 import { useCart } from '@/app/context/CartContext'
+import { useState } from 'react'
 
 const ProductCard = ({ product }: { product: Product }) => {
 	const { addToCart, updateQuantity, items } = useCart()
+	const [isHovered, setIsHovered] = useState(false)
 
 	// Check if product is in cart and get quantity
 	const cartItem = items.find((item) => item.id === product.id)
@@ -26,92 +28,139 @@ const ProductCard = ({ product }: { product: Product }) => {
 		updateQuantity(product.id, quantityInCart - 1)
 	}
 
+	// Stock status
+	const stockStatus = product.stock === 0 
+		? 'out' 
+		: product.stock <= 3 
+			? 'low' 
+			: 'in'
+
 	return (
 		<div
-			key={product.id}
-			className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300'
+			className='group bg-white rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 cursor-pointer'
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
 		>
-			<div className='relative h-48 w-full'>
+			{/* Image Container */}
+			<div className='relative aspect-square overflow-hidden bg-beige'>
 				<Image
 					src={product.image}
 					alt={product.name}
 					fill
-					className='object-cover'
+					className={`object-cover transition-transform duration-500 ${
+						isHovered ? 'scale-105' : 'scale-100'
+					}`}
 				/>
-			</div>
-
-			<div className='p-4'>
-				<div className='text-xs text-gray-500 mb-2'>
-					{product.category}
-				</div>
-				<h3 className='text-md font-semibold mb-2 text-gray-900'>
-					{product.name}
-				</h3>
-				<p className='text-gray-600 mb-4 line-clamp-2 text-sm'>
-					{product.description}
-				</p>
-
-				<div className='flex items-center justify-between'>
-					<span className='text-lg font-bold text-gray-900'>
-						₹{product.price.toFixed(2)}
+				
+				{/* Badges Container */}
+				<div className='absolute top-2 left-2 z-10'>
+					<span className='bg-deep-brown/80 text-cream text-[9px] font-medium px-1.5 py-0.5 rounded capitalize'>
+						{product.category.length > 8 
+							? product.category.slice(0, 8) + '..' 
+							: product.category
+						}
 					</span>
+				</div>
+				
+				{/* Stock Badge */}
+				{stockStatus !== 'in' && (
+					<div className='absolute top-2 right-2 z-10'>
+						<span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${
+							stockStatus === 'out' 
+								? 'bg-red-600 text-white' 
+								: 'bg-terracotta text-white'
+						}`}>
+							{stockStatus === 'out' ? 'Sold Out' : `${product.stock} left`}
+						</span>
+					</div>
+				)}
 
-					{/* Show +/- controls if in cart, otherwise show Add button */}
-					{isInCart ? (
-						<div className='flex items-center border border-gray-300 rounded-lg'>
+				{/* Quick Add Overlay */}
+				<div className={`absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/60 via-black/30 to-transparent transition-all duration-300 ${
+					isHovered ? 'opacity-100' : 'opacity-0'
+				}`}>
+					{!isInCart && product.stock > 0 && (
+						<button
+							onClick={(e) => {
+								e.stopPropagation()
+								handleAddToCart()
+							}}
+							className='w-full bg-white text-deep-brown py-1.5 rounded font-medium text-xs hover:bg-cream transition-colors cursor-pointer'
+						>
+							Add to Cart
+						</button>
+					)}
+					{isInCart && (
+						<div className='flex items-center justify-center gap-0.5 bg-white rounded overflow-hidden'>
 							<button
-								onClick={handleDecrease}
-								className='px-3 py-1.5 hover:bg-gray-100 transition-colors'
+								onClick={(e) => {
+									e.stopPropagation()
+									handleDecrease()
+								}}
+								className='px-3 py-1.5 text-deep-brown hover:bg-beige transition-colors cursor-pointer font-medium text-sm'
 							>
 								−
 							</button>
-							<span className='px-4 py-1.5 border-x border-gray-300 font-semibold min-w-[40px] text-center'>
+							<span className='px-2 py-1.5 font-semibold text-deep-brown text-xs min-w-[28px] text-center'>
 								{quantityInCart}
 							</span>
 							<button
-								onClick={handleIncrease}
+								onClick={(e) => {
+									e.stopPropagation()
+									handleIncrease()
+								}}
 								disabled={quantityInCart >= product.stock}
-								className={`px-3 py-1.5 transition-colors ${
+								className={`px-3 py-1.5 transition-colors font-medium text-sm ${
 									quantityInCart >= product.stock
-										? 'text-gray-400 cursor-not-allowed'
-										: 'hover:bg-gray-100'
+										? 'text-warm-gray cursor-not-allowed'
+										: 'text-deep-brown hover:bg-beige cursor-pointer'
 								}`}
 							>
 								+
 							</button>
 						</div>
-					) : (
-						<button
-							onClick={handleAddToCart}
-							disabled={product.stock === 0}
-							className={`px-6 py-2 rounded-lg transition-colors ${
-								product.stock === 0
-									? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-									: 'bg-blue-600 text-white hover:bg-blue-700'
-							}`}
-						>
-							{product.stock === 0
-								? 'Out of Stock'
-								: 'Add to Cart'}
-						</button>
+					)}
+				</div>
+			</div>
+
+			{/* Content */}
+			<div className='p-2.5'>
+				{/* Product Name */}
+				<h3 className='font-medium text-deep-brown text-xs mb-0.5 line-clamp-1 group-hover:text-terracotta transition-colors'>
+					{product.name}
+				</h3>
+				
+				{/* Description */}
+				<p className='text-warm-gray text-[10px] mb-2 line-clamp-1'>
+					{product.description}
+				</p>
+
+				{/* Price & Cart Status */}
+				<div className='flex items-center justify-between'>
+					<span className='text-sm font-bold text-deep-brown'>
+						₹{product.price.toLocaleString('en-IN')}
+					</span>
+
+					{/* In Cart Indicator */}
+					{isInCart && (
+						<div className='flex items-center gap-1 text-[9px]'>
+							<span className='w-1.5 h-1.5 rounded-full bg-sage' />
+							<span className='text-sage font-medium'>
+								{quantityInCart} in cart
+							</span>
+						</div>
 					)}
 				</div>
 
-				{/* Stock Display */}
-				<div className='mt-3 text-sm'>
-					{product.stock === 0 ? (
-						<span className='text-red-600'>Out of Stock</span>
-					) : isInCart ? (
-						<span className='text-blue-600'>
-							{quantityInCart} in cart ·{' '}
-							{product.stock - quantityInCart} available
-						</span>
-					) : (
-						<span className='text-green-600'>
-							In Stock ({product.stock})
-						</span>
-					)}
-				</div>
+				{/* Out of Stock State */}
+				{product.stock === 0 && (
+					<button
+						disabled
+						className='mt-2 w-full py-1.5 rounded bg-gray-100 text-warm-gray text-[10px] font-medium cursor-not-allowed'
+					>
+						Out of Stock
+					</button>
+				)}
 			</div>
 		</div>
 	)

@@ -1,24 +1,41 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Playfair_Display, Lora, Dancing_Script, Inter } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from './context/CartContext'
 import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import { ClerkProvider } from '@clerk/nextjs'
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
+// Heading font - elegant serif
+const playfair = Playfair_Display({
+	variable: '--font-heading',
 	subsets: ['latin'],
+	display: 'swap',
 })
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
+// Body font - warm, readable serif
+const lora = Lora({
+	variable: '--font-body',
 	subsets: ['latin'],
+	display: 'swap',
+})
+
+// Accent font - handwritten feel
+const dancingScript = Dancing_Script({
+	variable: '--font-accent',
+	subsets: ['latin'],
+	display: 'swap',
+})
+
+// UI font - clean sans-serif for buttons/labels
+const inter = Inter({
+	variable: '--font-ui',
+	subsets: ['latin'],
+	display: 'swap',
 })
 
 export const metadata: Metadata = {
-	title: `Moorlee'z Art Studio`,
-	description: 'An E-commerce Website',
+	title: `Moorleez Art Studio | Where Handmade Meets Heart`,
+	description: 'Discover unique handmade art, acrylic paintings, crochet creations, and custom crafts. Each piece tells a story of creativity and passion.',
 	icons: {
 		icon: [
 			{ url: '/favicon.ico' },
@@ -36,17 +53,27 @@ export default function RootLayout({
 }>) {
 	return (
 		<ClerkProvider>
-			{' '}
-			<html lang='en'>
-				<body
-					className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
-				>
-					<CartProvider>
-						<Header />
-						{children}
-					</CartProvider>
-				</body>
-			</html>
+		<html lang='en'>
+			<body
+					className={`
+						${playfair.variable} 
+						${lora.variable} 
+						${dancingScript.variable} 
+						${inter.variable} 
+						antialiased 
+						min-h-screen 
+						flex 
+						flex-col
+					`}
+			>
+				<CartProvider>
+					<Header />
+						<main className='flex-1'>
+					{children}
+						</main>
+				</CartProvider>
+			</body>
+		</html>
 		</ClerkProvider>
 	)
 }

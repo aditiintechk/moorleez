@@ -1,13 +1,23 @@
 import { prismaConnection } from '@/lib/connection/prisma'
 import ProductCard from './ProductCard'
 
-export default async function ProductList() {
+interface ProductListProps {
+	category?: string
+}
+
+export default async function ProductList({ category }: ProductListProps) {
 	const products = await prismaConnection.product.findMany({
-		where: { isDeleted: false },
+		where: { 
+			isDeleted: false,
+			...(category ? { category } : {})
+		},
 		orderBy: { createdAt: 'desc' },
 	})
 
-	await new Promise((resolve) => setTimeout(resolve, 1000))
+	if (products.length === 0) {
+		return null
+	}
+
 	return products.map((product) => (
 		<ProductCard key={product.id} product={product} />
 	))
