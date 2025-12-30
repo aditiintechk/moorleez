@@ -9,7 +9,8 @@ import { useCart } from '@/app/context/CartContext'
 const mockProduct = {
 	id: '1',
 	name: 'Sunset Over Mountains',
-	description: 'A stunning acrylic painting capturing the serene beauty of mountains bathed in golden sunset light. Each brushstroke tells a story of nature\'s magnificence. This piece brings warmth and tranquility to any space, making it perfect for living rooms, bedrooms, or offices.',
+	description:
+		"A stunning acrylic painting capturing the serene beauty of mountains bathed in golden sunset light. Each brushstroke tells a story of nature's magnificence. This piece brings warmth and tranquility to any space, making it perfect for living rooms, bedrooms, or offices.",
 	longDescription: `This original acrylic painting is a celebration of nature's breathtaking beauty. The warm orange and golden hues of the setting sun create a peaceful atmosphere that transforms any room into a sanctuary of calm.
 
 Created with premium artist-grade acrylic paints on gallery-quality canvas, this piece features rich textures and depth that photographs simply cannot capture. The painting arrives ready to hang with a sturdy wire backing.
@@ -36,7 +37,8 @@ const mockReviews = [
 		id: '1',
 		userName: 'Priya Sharma',
 		rating: 5,
-		comment: 'Absolutely stunning! The colors are even more vibrant in person. Shipped quickly and was packaged with care.',
+		comment:
+			'Absolutely stunning! The colors are even more vibrant in person. Shipped quickly and was packaged with care.',
 		date: '2024-11-15',
 		verified: true,
 	},
@@ -44,7 +46,8 @@ const mockReviews = [
 		id: '2',
 		userName: 'Rahul M.',
 		rating: 4,
-		comment: 'Beautiful artwork that really brightens up my living room. Would have loved slightly faster shipping but overall very happy!',
+		comment:
+			'Beautiful artwork that really brightens up my living room. Would have loved slightly faster shipping but overall very happy!',
 		date: '2024-11-10',
 		verified: true,
 	},
@@ -52,17 +55,23 @@ const mockReviews = [
 		id: '3',
 		userName: 'Ananya K.',
 		rating: 5,
-		comment: 'This piece exceeded my expectations! The artist clearly puts so much love into their work. Will definitely be ordering more.',
+		comment:
+			'This piece exceeded my expectations! The artist clearly puts so much love into their work. Will definitely be ordering more.',
 		date: '2024-10-28',
 		verified: false,
 	},
 ]
 
-function StarRating({ rating, size = 'md', interactive = false, onChange }: { 
+function StarRating({
+	rating,
+	size = 'md',
+	interactive = false,
+	onChange,
+}: {
 	rating: number
 	size?: 'sm' | 'md' | 'lg'
 	interactive?: boolean
-	onChange?: (rating: number) => void 
+	onChange?: (rating: number) => void
 }) {
 	const sizeClasses = {
 		sm: 'w-3.5 h-3.5',
@@ -78,11 +87,17 @@ function StarRating({ rating, size = 'md', interactive = false, onChange }: {
 					type='button'
 					disabled={!interactive}
 					onClick={() => onChange?.(star)}
-					className={interactive ? 'cursor-pointer hover:scale-110 transition-transform' : 'cursor-default'}
+					className={
+						interactive
+							? 'cursor-pointer hover:scale-110 transition-transform'
+							: 'cursor-default'
+					}
 				>
 					<svg
 						className={`${sizeClasses[size]} ${
-							star <= rating ? 'text-terracotta fill-terracotta' : 'text-warm-gray/30 fill-warm-gray/30'
+							star <= rating
+								? 'text-terracotta fill-terracotta'
+								: 'text-warm-gray/30 fill-warm-gray/30'
 						}`}
 						viewBox='0 0 20 20'
 					>
@@ -97,19 +112,22 @@ function StarRating({ rating, size = 'md', interactive = false, onChange }: {
 export default function ProductDetailPage() {
 	const [selectedImage, setSelectedImage] = useState(0)
 	const [quantity, setQuantity] = useState(1)
-	const [activeTab, setActiveTab] = useState<'description' | 'reviews'>('description')
+	const [activeTab, setActiveTab] = useState<'description' | 'reviews'>(
+		'description'
+	)
 	const [showReviewForm, setShowReviewForm] = useState(false)
 	const [newReview, setNewReview] = useState({ rating: 5, comment: '' })
 	const { addToCart, items } = useCart()
 
 	const product = mockProduct
 	const reviews = mockReviews
-	
-	const cartItem = items.find(item => item.id === product.id)
+
+	const cartItem = items.find((item) => item.id === product.id)
 	const quantityInCart = cartItem?.quantity || 0
 	const isInCart = quantityInCart > 0
-	
-	const averageRating = reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+
+	const averageRating =
+		reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
 
 	const handleAddToCart = () => {
 		for (let i = 0; i < quantity; i++) {
@@ -130,9 +148,17 @@ export default function ProductDetailPage() {
 			{/* Breadcrumb */}
 			<div className='max-w-7xl mx-auto px-4 py-4'>
 				<nav className='flex items-center gap-2 text-sm text-warm-gray'>
-					<Link href='/' className='hover:text-deep-brown transition-colors'>Home</Link>
+					<Link
+						href='/'
+						className='hover:text-deep-brown transition-colors'
+					>
+						Home
+					</Link>
 					<span>/</span>
-					<Link href={`/?category=${product.category}`} className='hover:text-deep-brown transition-colors capitalize'>
+					<Link
+						href={`/?category=${product.category}`}
+						className='hover:text-deep-brown transition-colors capitalize'
+					>
 						{product.category}
 					</Link>
 					<span>/</span>
@@ -143,7 +169,6 @@ export default function ProductDetailPage() {
 			{/* Main Product Section */}
 			<div className='max-w-7xl mx-auto px-4 pb-12'>
 				<div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12'>
-					
 					{/* Image Gallery */}
 					<div className='space-y-4'>
 						{/* Main Image */}
@@ -174,12 +199,17 @@ export default function ProductDetailPage() {
 									key={idx}
 									onClick={() => setSelectedImage(idx)}
 									className={`relative w-20 h-20 rounded-xl overflow-hidden shrink-0 transition-all ${
-										selectedImage === idx 
-											? 'ring-2 ring-terracotta ring-offset-2' 
+										selectedImage === idx
+											? 'ring-2 ring-terracotta ring-offset-2'
 											: 'opacity-70 hover:opacity-100'
 									}`}
 								>
-									<Image src={img} alt={`${product.name} ${idx + 1}`} fill className='object-cover' />
+									<Image
+										src={img}
+										alt={`${product.name} ${idx + 1}`}
+										fill
+										className='object-cover'
+									/>
 								</button>
 							))}
 						</div>
@@ -192,7 +222,7 @@ export default function ProductDetailPage() {
 							<span className='text-xs text-terracotta font-medium uppercase tracking-wider'>
 								{product.category}
 							</span>
-							<h1 className='text-3xl lg:text-4xl font-bold text-deep-brown font-[family-name:var(--font-heading)] mt-2'>
+							<h1 className='text-3xl lg:text-4xl font-bold text-deep-brown font-(family-name:--font-heading) mt-2'>
 								{product.name}
 							</h1>
 						</div>
@@ -201,7 +231,8 @@ export default function ProductDetailPage() {
 						<div className='flex items-center gap-3'>
 							<StarRating rating={Math.round(averageRating)} />
 							<span className='text-sm text-warm-gray'>
-								{averageRating.toFixed(1)} ({reviews.length} reviews)
+								{averageRating.toFixed(1)} ({reviews.length}{' '}
+								reviews)
 							</span>
 						</div>
 
@@ -223,12 +254,20 @@ export default function ProductDetailPage() {
 						{/* Product Details */}
 						<div className='grid grid-cols-2 gap-4 py-4 border-y border-light-gray'>
 							<div>
-								<span className='text-xs text-warm-gray uppercase tracking-wide'>Dimensions</span>
-								<p className='text-deep-brown font-medium mt-1'>{product.dimensions}</p>
+								<span className='text-xs text-warm-gray uppercase tracking-wide'>
+									Dimensions
+								</span>
+								<p className='text-deep-brown font-medium mt-1'>
+									{product.dimensions}
+								</p>
 							</div>
 							<div>
-								<span className='text-xs text-warm-gray uppercase tracking-wide'>Materials</span>
-								<p className='text-deep-brown font-medium mt-1'>{product.materials}</p>
+								<span className='text-xs text-warm-gray uppercase tracking-wide'>
+									Materials
+								</span>
+								<p className='text-deep-brown font-medium mt-1'>
+									{product.materials}
+								</p>
 							</div>
 						</div>
 
@@ -237,10 +276,16 @@ export default function ProductDetailPage() {
 							<div className='space-y-4'>
 								{/* Quantity Selector */}
 								<div className='flex items-center gap-4'>
-									<span className='text-sm text-charcoal font-medium'>Quantity:</span>
+									<span className='text-sm text-charcoal font-medium'>
+										Quantity:
+									</span>
 									<div className='flex items-center bg-beige rounded-xl overflow-hidden'>
 										<button
-											onClick={() => setQuantity(Math.max(1, quantity - 1))}
+											onClick={() =>
+												setQuantity(
+													Math.max(1, quantity - 1)
+												)
+											}
 											className='px-4 py-2.5 text-deep-brown hover:bg-clay/20 transition-colors font-medium'
 										>
 											−
@@ -249,8 +294,19 @@ export default function ProductDetailPage() {
 											{quantity}
 										</span>
 										<button
-											onClick={() => setQuantity(Math.min(product.stock - quantityInCart, quantity + 1))}
-											disabled={quantity >= product.stock - quantityInCart}
+											onClick={() =>
+												setQuantity(
+													Math.min(
+														product.stock -
+															quantityInCart,
+														quantity + 1
+													)
+												)
+											}
+											disabled={
+												quantity >=
+												product.stock - quantityInCart
+											}
 											className='px-4 py-2.5 text-deep-brown hover:bg-clay/20 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed'
 										>
 											+
@@ -264,11 +320,24 @@ export default function ProductDetailPage() {
 								{/* Add to Cart Button */}
 								<button
 									onClick={handleAddToCart}
-									disabled={quantity > product.stock - quantityInCart}
+									disabled={
+										quantity >
+										product.stock - quantityInCart
+									}
 									className='btn-primary w-full py-4 text-lg flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed'
 								>
-									<svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z' />
+									<svg
+										className='w-6 h-6'
+										fill='none'
+										stroke='currentColor'
+										viewBox='0 0 24 24'
+									>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z'
+										/>
 									</svg>
 									Add to Cart
 								</button>
@@ -282,7 +351,9 @@ export default function ProductDetailPage() {
 							</div>
 						) : (
 							<div className='bg-beige rounded-xl p-4 text-center'>
-								<p className='text-warm-gray font-medium'>This item is currently sold out</p>
+								<p className='text-warm-gray font-medium'>
+									This item is currently sold out
+								</p>
 								<button className='mt-3 text-sm text-terracotta hover:underline'>
 									Notify me when available
 								</button>
@@ -293,27 +364,63 @@ export default function ProductDetailPage() {
 						<div className='grid grid-cols-3 gap-4 pt-4'>
 							<div className='text-center'>
 								<div className='w-10 h-10 mx-auto mb-2 rounded-full bg-sage/10 flex items-center justify-center'>
-									<svg className='w-5 h-5 text-sage' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 13l4 4L19 7' />
+									<svg
+										className='w-5 h-5 text-sage'
+										fill='none'
+										stroke='currentColor'
+										viewBox='0 0 24 24'
+									>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M5 13l4 4L19 7'
+										/>
 									</svg>
 								</div>
-								<p className='text-xs text-warm-gray'>Handmade with Love</p>
+								<p className='text-xs text-warm-gray'>
+									Handmade with Love
+								</p>
 							</div>
 							<div className='text-center'>
 								<div className='w-10 h-10 mx-auto mb-2 rounded-full bg-sage/10 flex items-center justify-center'>
-									<svg className='w-5 h-5 text-sage' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' />
+									<svg
+										className='w-5 h-5 text-sage'
+										fill='none'
+										stroke='currentColor'
+										viewBox='0 0 24 24'
+									>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+										/>
 									</svg>
 								</div>
-								<p className='text-xs text-warm-gray'>Ships in 3-5 Days</p>
+								<p className='text-xs text-warm-gray'>
+									Ships in 3-5 Days
+								</p>
 							</div>
 							<div className='text-center'>
 								<div className='w-10 h-10 mx-auto mb-2 rounded-full bg-sage/10 flex items-center justify-center'>
-									<svg className='w-5 h-5 text-sage' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-										<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' />
+									<svg
+										className='w-5 h-5 text-sage'
+										fill='none'
+										stroke='currentColor'
+										viewBox='0 0 24 24'
+									>
+										<path
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth={2}
+											d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
+										/>
 									</svg>
 								</div>
-								<p className='text-xs text-warm-gray'>Secure Checkout</p>
+								<p className='text-xs text-warm-gray'>
+									Secure Checkout
+								</p>
 							</div>
 						</div>
 					</div>
@@ -366,13 +473,26 @@ export default function ProductDetailPage() {
 									<div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
 										<div className='flex items-center gap-4'>
 											<div className='text-center'>
-												<p className='text-4xl font-bold text-deep-brown'>{averageRating.toFixed(1)}</p>
-												<StarRating rating={Math.round(averageRating)} size='sm' />
-												<p className='text-xs text-warm-gray mt-1'>{reviews.length} reviews</p>
+												<p className='text-4xl font-bold text-deep-brown'>
+													{averageRating.toFixed(1)}
+												</p>
+												<StarRating
+													rating={Math.round(
+														averageRating
+													)}
+													size='sm'
+												/>
+												<p className='text-xs text-warm-gray mt-1'>
+													{reviews.length} reviews
+												</p>
 											</div>
 										</div>
 										<button
-											onClick={() => setShowReviewForm(!showReviewForm)}
+											onClick={() =>
+												setShowReviewForm(
+													!showReviewForm
+												)
+											}
 											className='btn-secondary'
 										>
 											Write a Review
@@ -382,22 +502,41 @@ export default function ProductDetailPage() {
 
 								{/* Review Form */}
 								{showReviewForm && (
-									<form onSubmit={handleSubmitReview} className='bg-white rounded-2xl p-6 shadow-soft space-y-4 animate-fade-in'>
-										<h3 className='font-semibold text-deep-brown'>Write Your Review</h3>
+									<form
+										onSubmit={handleSubmitReview}
+										className='bg-white rounded-2xl p-6 shadow-soft space-y-4 animate-fade-in'
+									>
+										<h3 className='font-semibold text-deep-brown'>
+											Write Your Review
+										</h3>
 										<div>
-											<label className='block text-sm text-warm-gray mb-2'>Your Rating</label>
-											<StarRating 
-												rating={newReview.rating} 
-												size='lg' 
-												interactive 
-												onChange={(r) => setNewReview({ ...newReview, rating: r })}
+											<label className='block text-sm text-warm-gray mb-2'>
+												Your Rating
+											</label>
+											<StarRating
+												rating={newReview.rating}
+												size='lg'
+												interactive
+												onChange={(r) =>
+													setNewReview({
+														...newReview,
+														rating: r,
+													})
+												}
 											/>
 										</div>
 										<div>
-											<label className='block text-sm text-warm-gray mb-2'>Your Review</label>
+											<label className='block text-sm text-warm-gray mb-2'>
+												Your Review
+											</label>
 											<textarea
 												value={newReview.comment}
-												onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+												onChange={(e) =>
+													setNewReview({
+														...newReview,
+														comment: e.target.value,
+													})
+												}
 												rows={4}
 												className='input resize-none'
 												placeholder='Share your experience with this product...'
@@ -405,12 +544,17 @@ export default function ProductDetailPage() {
 											/>
 										</div>
 										<div className='flex gap-3'>
-											<button type='submit' className='btn-primary'>
+											<button
+												type='submit'
+												className='btn-primary'
+											>
 												Submit Review
 											</button>
-											<button 
-												type='button' 
-												onClick={() => setShowReviewForm(false)}
+											<button
+												type='button'
+												onClick={() =>
+													setShowReviewForm(false)
+												}
 												className='btn-secondary'
 											>
 												Cancel
@@ -422,25 +566,39 @@ export default function ProductDetailPage() {
 								{/* Reviews List */}
 								<div className='space-y-4'>
 									{reviews.map((review) => (
-										<div key={review.id} className='bg-white rounded-2xl p-6 shadow-soft'>
+										<div
+											key={review.id}
+											className='bg-white rounded-2xl p-6 shadow-soft'
+										>
 											<div className='flex items-start justify-between'>
 												<div>
 													<div className='flex items-center gap-2'>
-														<p className='font-medium text-deep-brown'>{review.userName}</p>
+														<p className='font-medium text-deep-brown'>
+															{review.userName}
+														</p>
 														{review.verified && (
 															<span className='text-xs bg-sage/10 text-sage px-2 py-0.5 rounded-full'>
-																Verified Purchase
+																Verified
+																Purchase
 															</span>
 														)}
 													</div>
-													<StarRating rating={review.rating} size='sm' />
+													<StarRating
+														rating={review.rating}
+														size='sm'
+													/>
 												</div>
 												<span className='text-xs text-warm-gray'>
-													{new Date(review.date).toLocaleDateString('en-IN', { 
-														year: 'numeric', 
-														month: 'short', 
-														day: 'numeric' 
-													})}
+													{new Date(
+														review.date
+													).toLocaleDateString(
+														'en-IN',
+														{
+															year: 'numeric',
+															month: 'short',
+															day: 'numeric',
+														}
+													)}
 												</span>
 											</div>
 											<p className='mt-3 text-warm-gray leading-relaxed'>
@@ -457,4 +615,3 @@ export default function ProductDetailPage() {
 		</div>
 	)
 }
-

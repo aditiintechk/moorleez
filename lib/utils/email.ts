@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import { OrderWithItems } from '@/types'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || 'test_key')
 
 // Helper function to generate product items HTML
 function generateProductItemsHTML(items: OrderWithItems['items']): string {
