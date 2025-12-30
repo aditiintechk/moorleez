@@ -12,16 +12,16 @@ async function getCategories() {
 		select: { category: true },
 		distinct: ['category'],
 	})
-	return products.map(p => p.category)
+	return products.map((p) => p.category)
 }
 
 // Get product count
 async function getProductCount(category?: string) {
 	return prismaConnection.product.count({
-		where: { 
+		where: {
 			isDeleted: false,
-			...(category ? { category } : {})
-		}
+			...(category ? { category } : {}),
+		},
 	})
 }
 
@@ -33,7 +33,7 @@ export default async function ShopPage({
 	const params = await searchParams
 	const categories = await getCategories()
 	const productCount = await getProductCount(params.category)
-	
+
 	return (
 		<div className='min-h-screen bg-cream'>
 			{/* Filters Bar */}
@@ -78,25 +78,38 @@ export default async function ShopPage({
 				{productCount > 0 ? (
 					<div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3'>
 						<Suspense fallback={<ProductSkeleton />}>
-							<ProductList category={params.category} />
+							<ProductList
+								category={params.category}
+								sort={params.sort}
+								search={params.search}
+							/>
 						</Suspense>
 					</div>
 				) : (
 					/* Empty State */
 					<div className='text-center py-16'>
 						<div className='w-20 h-20 mx-auto mb-6 rounded-full bg-beige flex items-center justify-center'>
-							<svg className='w-10 h-10 text-clay' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-								<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5} d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' />
+							<svg
+								className='w-10 h-10 text-clay'
+								fill='none'
+								stroke='currentColor'
+								viewBox='0 0 24 24'
+							>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={1.5}
+									d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'
+								/>
 							</svg>
 						</div>
-						<h3 className='text-xl font-semibold text-deep-brown font-[family-name:var(--font-heading)] mb-2'>
+						<h3 className='text-xl font-semibold text-deep-brown font-(family-name:--font-heading) mb-2'>
 							No products found
 						</h3>
 						<p className='text-warm-gray mb-6'>
-							{params.category 
+							{params.category
 								? `No products in "${params.category}" category yet.`
-								: 'No products available at the moment.'
-							}
+								: 'No products available at the moment.'}
 						</p>
 						{params.category && (
 							<Link href='/' className='btn-primary inline-block'>

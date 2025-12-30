@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prismaConnection } from '@/lib/connection/prisma'
 import generateOrderId from '@/lib/orders/generateId'
+import {
+	sendAdminOrderNotification,
+	sendOrderConfirmationEmail,
+} from '@/lib/utils/email'
 
 export async function POST(request: NextRequest) {
 	try {
@@ -32,6 +36,7 @@ export async function POST(request: NextRequest) {
 					totalItems: data.totalItems,
 				},
 			})
+
 			// step 2: create orderItem
 			for (const item of data.items) {
 				await tx.orderItem.create({
@@ -71,8 +76,26 @@ export async function POST(request: NextRequest) {
 				})
 			}
 
+			const completeOrder = await tx.order.findUnique({
+				where: { id: newOrder.id },
+				include: { items: true },
+			})
+
+			if (!completeOrder) {
+				throw new Error('Order not found after creation')
+			}
+
 			// step 4: return the order at the end
-			return newOrder
+			return completeOrder
+		})
+
+		// call the email function
+		sendOrderConfirmationEmail(order).catch((error) => {
+			console.log('failed to send email', error)
+		})
+
+		sendAdminOrderNotification(order).catch((error) => {
+			console.log('failed to send admin notification', error)
 		})
 
 		return NextResponse.json({ success: true, orderId: order.orderId })

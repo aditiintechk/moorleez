@@ -1,4 +1,5 @@
 import { Product as PrismaProduct } from '@prisma/client'
+import { Order, OrderItem } from '@prisma/client'
 
 export type Product = PrismaProduct
 
@@ -49,4 +50,8 @@ export type TopProduct = {
 	productName: string
 	unitsSold: number
 	revenue: number
+}
+
+export type OrderWithItems = Order & {
+	items: OrderItem[]
 }
