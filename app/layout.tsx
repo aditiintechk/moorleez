@@ -4,6 +4,7 @@ import './globals.css'
 import { CartProvider } from './context/CartContext'
 import Header from '@/components/layout/Header'
 import { ClerkProvider } from '@clerk/nextjs'
+import { Suspense } from 'react'
 
 // Heading font - elegant serif
 const playfair = Playfair_Display({
@@ -67,7 +68,9 @@ export default function RootLayout({
 					`}
 			>
 				<CartProvider>
-					<Header />
+					<Suspense fallback={<div className='h-20' />}>
+						<Header />
+					</Suspense>
 						<main className='flex-1'>
 					{children}
 						</main>

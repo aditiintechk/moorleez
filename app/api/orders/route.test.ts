@@ -5,6 +5,7 @@ import { NextRequest } from 'next/server'
 const mockTx = {
 	order: {
 		create: vi.fn(),
+		findUnique: vi.fn(),
 	},
 	orderItem: {
 		create: vi.fn(),
@@ -36,6 +37,21 @@ describe('POST /api/orders', () => {
 		mockTx.order.create.mockResolvedValue({
 			id: 'mock-id',
 			orderId: 'ORD-MOCK-123',
+		})
+
+		mockTx.order.findUnique.mockResolvedValue({
+			id: 'mock-id',
+			orderId: 'ORD-MOCK-123',
+			items: [
+				{
+					id: 'item-id',
+					productName: 'Test',
+					productPrice: 100,
+					productImage: '/test.jpg',
+					quantity: 1,
+					subtotal: 100,
+				},
+			],
 		})
 
 		mockTx.orderItem.create.mockResolvedValue({
