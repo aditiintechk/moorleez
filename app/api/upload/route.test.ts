@@ -53,30 +53,28 @@ describe('POST /api/upload', () => {
 		// Mock upload_stream to call the callback with success
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation(
 			(options: any, callback?: any) => {
-				// Call callback synchronously using queueMicrotask for proper async behavior
-				queueMicrotask(() => {
-					callback?.(null, {
-						secure_url: mockSecureUrl,
-						public_id: 'moorleez-products/test',
-						format: 'jpg',
-						width: 800,
-						height: 600,
-						bytes: 12345,
-						created_at: new Date().toISOString(),
-						resource_type: 'image',
-						type: 'upload',
-						url: 'http://res.cloudinary.com/test/image/upload/v123/test.jpg',
-						version: 123,
-						asset_id: 'test-asset-id',
-						version_id: 'test-version-id',
-						signature: 'test-signature',
-						etag: 'test-etag',
-					} as any)
-				})
-
-				// Return a mock stream with end method
+				// Return a mock stream with end method that triggers callback
 				return {
-					end: vi.fn(),
+					end: vi.fn(() => {
+						// Call callback synchronously when end() is called
+						callback?.(null, {
+							secure_url: mockSecureUrl,
+							public_id: 'moorleez-products/test',
+							format: 'jpg',
+							width: 800,
+							height: 600,
+							bytes: 12345,
+							created_at: new Date().toISOString(),
+							resource_type: 'image',
+							type: 'upload',
+							url: 'http://res.cloudinary.com/test/image/upload/v123/test.jpg',
+							version: 123,
+							asset_id: 'test-asset-id',
+							version_id: 'test-version-id',
+							signature: 'test-signature',
+							etag: 'test-etag',
+						} as any)
+					}),
 				} as any
 			}
 		)
@@ -116,13 +114,11 @@ describe('POST /api/upload', () => {
 		// Mock Cloudinary upload failure
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation(
 			(options: any, callback?: any) => {
-				// Call callback synchronously using queueMicrotask
-				queueMicrotask(() => {
-					callback?.(new Error('Cloudinary upload failed'), undefined)
-				})
-
 				return {
-					end: vi.fn(),
+					end: vi.fn(() => {
+						// Call callback with error when end() is called
+						callback?.(new Error('Cloudinary upload failed'), undefined)
+					}),
 				} as any
 			}
 		)
@@ -147,13 +143,11 @@ describe('POST /api/upload', () => {
 		// Mock Cloudinary returning neither error nor result
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation(
 			(options: any, callback?: any) => {
-				// Call callback synchronously using queueMicrotask
-				queueMicrotask(() => {
-					callback?.(null, undefined)
-				})
-
 				return {
-					end: vi.fn(),
+					end: vi.fn(() => {
+						// Call callback with neither error nor result when end() is called
+						callback?.(null, undefined)
+					}),
 				} as any
 			}
 		)
@@ -178,15 +172,15 @@ describe('POST /api/upload', () => {
 		const mockEnd = vi.fn()
 
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation((options: any, callback?: any) => {
-			// Call callback synchronously using queueMicrotask
-			queueMicrotask(() => {
-				callback?.(null, {
-					secure_url: 'https://test.com/image.jpg',
-				} as any)
-			})
-
 			return {
-				end: mockEnd,
+				end: vi.fn((buffer: Buffer) => {
+					// Call the original mockEnd to verify buffer
+					mockEnd(buffer)
+					// Call callback when end() is called
+					callback?.(null, {
+						secure_url: 'https://test.com/image.jpg',
+					} as any)
+				}),
 			} as any
 		})
 
