@@ -53,8 +53,8 @@ describe('POST /api/upload', () => {
 		// Mock upload_stream to call the callback with success
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation(
 			(options: any, callback?: any) => {
-				// Simulate successful upload by calling callback
-				setTimeout(() => {
+				// Call callback synchronously using queueMicrotask for proper async behavior
+				queueMicrotask(() => {
 					callback?.(null, {
 						secure_url: mockSecureUrl,
 						public_id: 'moorleez-products/test',
@@ -72,7 +72,7 @@ describe('POST /api/upload', () => {
 						signature: 'test-signature',
 						etag: 'test-etag',
 					} as any)
-				}, 0)
+				})
 
 				// Return a mock stream with end method
 				return {
@@ -116,10 +116,10 @@ describe('POST /api/upload', () => {
 		// Mock Cloudinary upload failure
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation(
 			(options: any, callback?: any) => {
-				// Simulate upload error
-				setTimeout(() => {
+				// Call callback synchronously using queueMicrotask
+				queueMicrotask(() => {
 					callback?.(new Error('Cloudinary upload failed'), undefined)
-				}, 0)
+				})
 
 				return {
 					end: vi.fn(),
@@ -147,10 +147,10 @@ describe('POST /api/upload', () => {
 		// Mock Cloudinary returning neither error nor result
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation(
 			(options: any, callback?: any) => {
-				// Simulate no error but also no result (edge case)
-				setTimeout(() => {
+				// Call callback synchronously using queueMicrotask
+				queueMicrotask(() => {
 					callback?.(null, undefined)
-				}, 0)
+				})
 
 				return {
 					end: vi.fn(),
@@ -178,12 +178,12 @@ describe('POST /api/upload', () => {
 		const mockEnd = vi.fn()
 
 		vi.mocked(cloudinary.uploader.upload_stream).mockImplementation((options: any, callback?: any) => {
-			// Call callback immediately to prevent timeout
-			setTimeout(() => {
+			// Call callback synchronously using queueMicrotask
+			queueMicrotask(() => {
 				callback?.(null, {
 					secure_url: 'https://test.com/image.jpg',
 				} as any)
-			}, 0)
+			})
 
 			return {
 				end: mockEnd,
