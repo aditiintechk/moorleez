@@ -5,7 +5,8 @@
       "Bash(npx tsc:*)",
       "Bash(npm run lint)",
       "Bash(npm run:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(dir:*)"
     ]
   }
 }
